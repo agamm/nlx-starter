@@ -1,6 +1,12 @@
 import * as React from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  // Put Header or Footer Here
-  return <>{children}</>;
+  return (
+    <>
+      <h1>Your public site here</h1>
+      <div className='container'>
+        <main>{children}</main>
+      </div>
+    </>
+  );
 }

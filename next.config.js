@@ -13,6 +13,12 @@ module.exports = {
   //   ],
   // },
 
+  async rewrites() {
+    return [
+      { source: '/r/:shortURL*', destination: '/api/redirect/:shortURL*' },
+    ];
+  },
+
   // SVGR
   webpack(config) {
     config.module.rules.push({
