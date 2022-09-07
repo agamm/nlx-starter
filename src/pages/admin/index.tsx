@@ -9,6 +9,7 @@ export default function HomePage() {
       <section className='bg-white'>
         <h1>Howdy there!</h1>
         <Statistics />
+        <p>Here there will be an SQL + react table component</p>
       </section>
     </AdminLayout>
   );
