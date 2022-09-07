@@ -16,11 +16,11 @@ export const Navigation = () => {
   return (
     <nav className='w-56' data-testid='navigation'>
       <ul>
-        {NavLink('Home', '/')}
-        {NavLink('Emails', '/emails')}
-        {NavLink('Subscribers', '/subscribers')}
-        {NavLink('Segments', '/segments')}
-        {NavLink('API', '/api')}
+        {NavLink('Home', '/admin')}
+        {NavLink('Emails', '/admin/emails')}
+        {NavLink('Subscribers', '/admin/subscribers')}
+        {NavLink('Segments', '/admin/segments')}
+        {NavLink('API', '/admin/api')}
       </ul>
     </nav>
   );
