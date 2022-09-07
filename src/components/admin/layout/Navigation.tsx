@@ -12,9 +12,9 @@ function NavLink(name: string, href: string) {
   );
 }
 
-export default function Header() {
+export const Navigation = () => {
   return (
-    <nav className='w-56'>
+    <nav className='w-56' data-testid='navigation'>
       <ul>
         {NavLink('Home', '/')}
         {NavLink('Emails', '/emails')}
@@ -24,4 +24,4 @@ export default function Header() {
       </ul>
     </nav>
   );
-}
+};

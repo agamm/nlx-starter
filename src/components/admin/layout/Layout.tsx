@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Header from '@/components/admin/layout/Header';
-import Navigation from '@/components/admin/layout/Navigation';
+import { Navigation } from '@/components/admin/layout/Navigation';
 
 export default function AdminLayout({
   children,
