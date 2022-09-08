@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Every email has links
+model Email {
+  id         String       @id @default(uuid()) @db.Uuid
+  name       String
+  order      Int          @unique
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  LinkSource LinkSource[]
+}
+
+// This is a link in the email
+model LinkSource {
+  id             String         @id @default(uuid()) @db.Uuid
+  originalURL    String         @unique @db.VarChar(2048)
+  personalLink   PersonalLink[]
+  linkCategory   LinkCategory?  @relation(fields: [linkCategoryId], references: [id])
+  linkCategoryId Int?
+  email          Email?         @relation(fields: [emailId], references: [id])
+  emailId        String?        @db.Uuid
+}
+
+// The short url per viewer
+model PersonalLink {
+  id           String     @id @default(uuid()) @db.Uuid
+  shortURL     String     @unique @db.VarChar(7)
+  linkSource   LinkSource @relation(fields: [linkSourceId], references: [id])
+  linkSourceId String     @db.Uuid
+  subscriber   Subscriber @relation(fields: [subscriberId], references: [id])
+  subscriberId String     @db.Uuid
+  opened       Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+// We might want to segment via links in a category.
+model LinkCategory {
+  id         Int          @id @default(autoincrement())
+  name       String
+  LinkSource LinkSource[]
+}
+
+// Segment users
+model Segment {
+  id         String       @id @default(uuid()) @db.Uuid
+  name       String
+  SegmentMap SegmentMap[]
+}
+
+// A user might have several segments
+model SegmentMap {
+  id           Int        @id @default(autoincrement())
+  segment      Segment    @relation(fields: [segmentId], references: [id])
+  segmentId    String     @db.Uuid
+  subscriber   Subscriber @relation(fields: [subscriberId], references: [id])
+  subscriberId String     @db.Uuid
+}
+
+// A user that is subscribed and clicked a link
+model Subscriber {
+  id           String         @id @default(uuid()) @db.Uuid
+  email        String         @unique
+  disabled     Boolean        @default(false)
+  SegmentMap   SegmentMap[]
+  PersonalLink PersonalLink[]
+}
